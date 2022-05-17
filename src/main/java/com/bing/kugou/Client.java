@@ -1,5 +1,6 @@
 package com.bing.kugou;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -78,6 +79,7 @@ public class Client {
 
             byte[] bytes = Base64.getDecoder().decode(content);
             String fileName = KRC_PATH + "\\" + singer + " - " + song;
+            fileName = FileUtil.cleanInvalid(fileName);
             Base64ToFile(bytes, fileName + ".krc");
             System.out.println("krc文件已保存在：" + fileName + ".krc");
 
