@@ -69,8 +69,8 @@ public class Client {
         if (Serial != 0) {
             String id = (String) result2JsonArray.getByPath("[" + (Serial - 1) + "].id");
             String accesskey = (String) result2JsonArray.getByPath("[" + (Serial - 1) + "].accesskey");
-            String singer = (String) result2JsonArray.getByPath("[" + (Serial - 1) + "].singer");
-            String song = (String) result2JsonArray.getByPath("[" + (Serial - 1) + "].song");
+            String singer = FileUtil.cleanInvalid((String) result2JsonArray.getByPath("[" + (Serial - 1) + "].singer"));
+            String song = FileUtil.cleanInvalid((String) result2JsonArray.getByPath("[" + (Serial - 1) + "].song"));
 
             String url3 = "http://lyrics.kugou.com/download?ver=1&client=pc&id=" + id + "&accesskey=" + accesskey + "&fmt=krc&charset=utf8";
             String result3 = HttpUtil.get(url3);
@@ -79,7 +79,6 @@ public class Client {
 
             byte[] bytes = Base64.getDecoder().decode(content);
             String fileName = KRC_PATH + "\\" + singer + " - " + song;
-            fileName = FileUtil.cleanInvalid(fileName);
             Base64ToFile(bytes, fileName + ".krc");
             System.out.println("krc文件已保存在：" + fileName + ".krc");
 
